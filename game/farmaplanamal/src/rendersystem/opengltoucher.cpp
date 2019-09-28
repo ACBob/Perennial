@@ -53,16 +53,23 @@ namespace perennial{
 
             glViewport(0, 0, 800, 600);
 
+            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
             return 0;
 
         }
 
         void Frame()
         {
+            glClear(GL_COLOR_BUFFER_BIT); //Clear the screen every frame
+            
 
+        }
+
+        void FinishFrame()
+        {
             glfwSwapBuffers(perennial::rendering::GameWindow);
             glfwPollEvents();
-
         }
 
         void Cleanup()

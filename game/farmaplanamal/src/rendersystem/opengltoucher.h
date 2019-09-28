@@ -8,5 +8,6 @@ namespace perennial{
         void SetWindowShouldClose(GLFWwindow* GameWindow,bool shouldClose);
         void Frame();
         void Cleanup();
+        void FinishFrame();
     }
 }

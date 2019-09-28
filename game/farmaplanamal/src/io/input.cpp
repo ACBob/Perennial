@@ -11,5 +11,14 @@ namespace perennial{
             }
 
         }
+        bool CheckClose()
+        {
+            if(glfwWindowShouldClose(perennial::rendering::GameWindow))
+            {
+                perennial::rendering::Cleanup();
+                return true;
+            }
+            return false;
+        }
     }
 }

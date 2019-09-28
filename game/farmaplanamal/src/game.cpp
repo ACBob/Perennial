@@ -23,11 +23,11 @@ namespace perennial{
 
             perennial::rendering::Frame();
             perennial::input::ProcessInput();
-            if(glfwWindowShouldClose(perennial::rendering::GameWindow))
+            if(perennial::input::CheckClose()) //Check if we're supposed to close.
             {
-                perennial::rendering::Cleanup();
-                return 0;
+                GameRunning = false;
             }
+            perennial::rendering::FinishFrame();
 
         }
         return 0;
