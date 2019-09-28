@@ -9,5 +9,10 @@ namespace perennial{
         void Frame();
         void Cleanup();
         void FinishFrame();
+
+        extern float triVerts[];
+        extern unsigned int VBO;
+        extern unsigned int shaderProgram;
+        extern unsigned int VAO;
     }
 }
