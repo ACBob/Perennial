@@ -96,8 +96,7 @@ namespace perennial{
 
 
             unsigned int vertexShader;
-            std::string vertexFilename = "shaders/vertex.glsl";
-            vertexShader = perennial::shaders::LoadShader(vertexFilename,GL_VERTEX_SHADER);
+            vertexShader = perennial::shaders::LoadShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             printf("perennial::render::compile_fragment\n");
             unsigned int fragmentShader;
             fragmentShader = perennial::shaders::LoadShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
