@@ -19,9 +19,12 @@
                 "game/farmaplanamal/src/glad.c",
                 "game/farmaplanamal/src/rendersystem/opengltoucher.cpp",
                 "game/farmaplanamal/src/game.cpp",
-                "game/farmaplanamal/src/io/input.cpp"
+                "game/farmaplanamal/src/io/input.cpp",
+                "game/farmaplanamal/src/rendersystem/glerrors.cpp",
+                "game/farmaplanamal/src/fileio/open.cpp",
+                "game/farmaplanamal/src/rendersystem/shaders/shaderloader.cpp",
 
-                "-o","game/farmaplanamal/main",
+                "-o","game/farmaplanamal/main.app",
                 "-lGL","-lglfw",
                 "-I","game/farmaplanamal/src/include",
                 "-I","game/farmaplanamal/src",
