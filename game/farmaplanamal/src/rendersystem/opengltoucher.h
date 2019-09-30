@@ -8,7 +8,7 @@ namespace perennial{
         void SetWindowShouldClose(GLFWwindow* GameWindow,bool shouldClose);
         void Frame();
         void Cleanup();
-        void FinishFrame();
+        void SetMode(GLenum face, GLenum mode);
 
         extern float triVerts[];
         extern unsigned int VBO;

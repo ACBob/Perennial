@@ -10,21 +10,28 @@
 #include <iostream>
 
 #include "opengltoucher.h"
+#include "glerrors.h"
+#include"shaders/shaderloader.h"
 
 namespace perennial{
 
     namespace rendering{
 
-        GLFWwindow* GameWindow = NULL;
+        GLFWwindow* GameWindow;
 
-        unsigned int VBO = NULL;
-        unsigned int shaderProgram = NULL;
-        unsigned int VAO = NULL;
+        unsigned int VBO;
+        unsigned int shaderProgram;
+        unsigned int VAO;
 
         float triVerts[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f,  0.5f, 0.0f
+            // first triangle
+            0.5f,  0.5f, 0.0f,  // top right
+            0.5f, -0.5f, 0.0f,  // bottom right
+            -0.5f,  0.5f, 0.0f,  // top left 
+            // second triangle
+            0.5f, -0.5f, 0.0f,  // bottom right
+            -0.5f, -0.5f, 0.0f,  // bottom left
+            -0.5f,  0.5f, 0.0f   // top left
         };
 
         int GetKey(GLFWwindow* GameWindow, int key)
@@ -39,6 +46,8 @@ namespace perennial{
 
         int Init(){
 
+            printf("perennial::render::init\n");
+
             glfwInit();
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -48,24 +57,25 @@ namespace perennial{
             #endif
 
             const char *vertexShaderSource = 
-                "#version 330 core\n"
+                "#version 450 core\n"
                 "layout (location = 0) in vec3 aPos;\n"
                 "void main()\n"
                 "{\n"
-                    "gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                    "gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0f);\n"
                 "}\n";
 
             const char *fragmentShaderSource =
-                "#version 330 core\n"
+                "#version 450 core\n"
                 "out vec4 FragColor;\n"
                 "void main()\n"
                 "{\n"
-                    "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+                    "FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
                 "}\n";
 
-
+            printf("perennial::render::create_window\n");
             GLFWwindow* GameWindow = glfwCreateWindow(800, 600, "Perennial Window", NULL, NULL);
             perennial::rendering::GameWindow = GameWindow;
+            glCheckError();
             if (perennial::rendering::GameWindow == NULL)
             {
                 printf("Failed to create GLFW window\n");
@@ -73,7 +83,7 @@ namespace perennial{
                 return -1;
             }
             glfwMakeContextCurrent(perennial::rendering::GameWindow);
-
+            printf("perennial::render::initialise_glad\n");
             if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
             {
                 printf("Failed to initialize GLAD\n");
@@ -81,58 +91,28 @@ namespace perennial{
             }    
 
             glViewport(0, 0, 800, 600);
+            glCheckError();
+            glClearColor(0.7f, 0.2f, 0.4f, 1.0f);
 
-            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
-            unsigned int VAO;
-            glGenVertexArrays(1, &VAO);  
-
-            glBindVertexArray(VAO);
-
-            unsigned int VBO;
-            glGenBuffers(1, &VBO);
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-            glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
 
             unsigned int vertexShader;
-            vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-            int  success;
-            char infoLog[512];
-
-            glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-            glCompileShader(vertexShader);
-
-            glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-
-
-            if(!success)
-            {
-                glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-                std::cout<<"ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"<<infoLog<<"\n";
-            }
-
+            std::string vertexFilename = "shaders/vertex.glsl";
+            vertexShader = perennial::shaders::LoadShader(vertexFilename,GL_VERTEX_SHADER);
+            printf("perennial::render::compile_fragment\n");
             unsigned int fragmentShader;
-            fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-            glCompileShader(fragmentShader);
-
-            glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-
-            if(!success)
-            {
-                glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-                std::cout<<"ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"<<infoLog<<"\n";
-            }
+            fragmentShader = perennial::shaders::LoadShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
 
             unsigned int shaderProgram;
             shaderProgram = glCreateProgram();
 
+            int success;
+            char infoLog[512];
 
+            printf("perennial::render::make_program\n");
             glAttachShader(shaderProgram, vertexShader);
             glAttachShader(shaderProgram, fragmentShader);
             glLinkProgram(shaderProgram);
+            glCheckError();
 
             glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
             if(!success) {
@@ -140,12 +120,33 @@ namespace perennial{
                 std::cout<<"ERROR::SHADER::PROGRAM::LINK_FAILED\n"<<infoLog<<"\n";
             }
             glDeleteShader(vertexShader);
-            glDeleteShader(fragmentShader);  
+            glDeleteShader(fragmentShader); 
+            glCheckError(); 
+
+            printf("perennial::render::generate_vao\n");
+            unsigned int VAO;
+            glGenVertexArrays(1, &VAO);  
+            glCheckError();
+            glBindVertexArray(VAO);
+            glCheckError();
+            printf("perennial::render::generate_vbo\n");
+            unsigned int VBO;
+            glGenBuffers(1, &VBO);
+            glBindBuffer(GL_ARRAY_BUFFER, VBO);
+            glCheckError();
+
+
+            glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
+            glCheckError();
 
             glUseProgram(shaderProgram);
+            glCheckError();
 
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0); 
+            glEnableVertexAttribArray(0);
+            glCheckError(); 
+
+            printf("perennial::render::init_end\n");
 
             return 0;
 
@@ -153,22 +154,28 @@ namespace perennial{
 
         void Frame()
         {
+            //glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT); //Clear the screen every frame
+            glGetError();
             
             glUseProgram(shaderProgram);
             glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glDrawArrays(GL_TRIANGLES, 0, 3);
-        }
+            glBindVertexArray(0);
 
-        void FinishFrame()
-        {
             glfwSwapBuffers(perennial::rendering::GameWindow);
             glfwPollEvents();
+            glGetError();
         }
 
         void Cleanup()
         {
             glfwTerminate(); 
+        }
+
+        void SetMode(GLenum face, GLenum mode)
+        {
+            glPolygonMode(face, mode);
         }
 
     }

@@ -27,7 +27,6 @@ namespace perennial{
             {
                 GameRunning = false;
             }
-            perennial::rendering::FinishFrame();
 
         }
         return 0;
