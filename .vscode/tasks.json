@@ -23,6 +23,7 @@
                 "game/farmaplanamal/src/rendersystem/glerrors.cpp",
                 "game/farmaplanamal/src/fileio/open.cpp",
                 "game/farmaplanamal/src/rendersystem/shaders/shaderloader.cpp",
+                "game/farmaplanamal/src/rendersystem/shaders/shaderprogram.cpp",
 
                 "-o","game/farmaplanamal/main.app",
                 "-lGL","-lglfw",
