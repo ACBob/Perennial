@@ -14,6 +14,11 @@ namespace perennial{
             const char* ShaderSource = ShaderFileLines.c_str();
 
             GLuint ShaderObject = glCreateShader(ShaderType);
+            if (ShaderObject==0)
+            {
+                std::cout << "Failed to Create Shader " << ShaderFileName << std::endl;
+                return 0;
+            }
 
             int  success;
             char infoLog[512];
