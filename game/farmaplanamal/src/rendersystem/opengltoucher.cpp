@@ -12,6 +12,7 @@
 #include "opengltoucher.h"
 #include "glerrors.h"
 #include"shaders/shaderloader.h"
+#include "rendersystem/shaders/shaderprogram.h"
 
 namespace perennial{
 
@@ -23,16 +24,12 @@ namespace perennial{
         unsigned int shaderProgram;
         unsigned int VAO;
 
+        
         float triVerts[] = {
-            // first triangle
-            0.5f,  0.5f, 0.0f,  // top right
-            0.5f, -0.5f, 0.0f,  // bottom right
-            -0.5f,  0.5f, 0.0f,  // top left 
-            // second triangle
-            0.5f, -0.5f, 0.0f,  // bottom right
-            -0.5f, -0.5f, 0.0f,  // bottom left
-            -0.5f,  0.5f, 0.0f   // top left
-        };
+            -0.5f, -0.5f, 0.0f, // left  
+            0.5f, -0.5f, 0.0f, // right 
+            0.0f,  0.5f, 0.0f  // top   
+        };      
 
         int GetKey(GLFWwindow* GameWindow, int key)
         {
@@ -74,60 +71,53 @@ namespace perennial{
                 return -1;
             }    
 
+            std::cout << "Detected Renderer Version: " << glGetString(GL_RENDERER) << std::endl;
+            std::cout << "Detected Supported OpenGl Version: " << glGetString(GL_VERSION) << std::endl;
+
             glViewport(0, 0, 800, 600);
             glCheckError();
             glClearColor(0.7f, 0.2f, 0.4f, 1.0f);
 
 
-            unsigned int vertexShader;
+            GLuint vertexShader;
             vertexShader = perennial::shaders::LoadShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             printf("perennial::render::compile_fragment\n");
-            unsigned int fragmentShader;
+            GLuint fragmentShader;
             fragmentShader = perennial::shaders::LoadShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
 
             unsigned int shaderProgram;
             shaderProgram = glCreateProgram();
-
-            int success;
-            char infoLog[512];
+            if (shaderProgram == 0)
+            {
+                std::cout << "Failed to create Shader Program" << std::endl;
+            }
 
             printf("perennial::render::make_program\n");
-            glAttachShader(shaderProgram, vertexShader);
-            glAttachShader(shaderProgram, fragmentShader);
-            glLinkProgram(shaderProgram);
-            glCheckError();
-
-            glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-            if(!success) {
-                glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-                std::cout<<"ERROR::SHADER::PROGRAM::LINK_FAILED\n"<<infoLog<<"\n";
-            }
+            perennial::shaders::CreateShaderProgram(vertexShader,fragmentShader);
             glDeleteShader(vertexShader);
             glDeleteShader(fragmentShader); 
             glCheckError(); 
 
-            printf("perennial::render::generate_vao\n");
-            unsigned int VAO;
-            glGenVertexArrays(1, &VAO);  
-            glCheckError();
-            glBindVertexArray(VAO);
-            glCheckError();
-            printf("perennial::render::generate_vbo\n");
-            unsigned int VBO;
+            printf("perennial::render::generate_vao and generate_vbo\n");
+            unsigned int VBO, VAO;
+            glGenVertexArrays(1, &VAO);
             glGenBuffers(1, &VBO);
+            // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+            glBindVertexArray(VAO);
+
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glCheckError();
-
-
             glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
-            glCheckError();
-
-            glUseProgram(shaderProgram);
-            glCheckError();
 
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
-            glCheckError(); 
+
+            // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+            glBindBuffer(GL_ARRAY_BUFFER, 0); 
+
+            // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+            // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+            glBindVertexArray(0); 
+
 
             printf("perennial::render::init_end\n");
 
@@ -137,14 +127,15 @@ namespace perennial{
 
         void Frame()
         {
-            //glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT); //Clear the screen every frame
+            glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen every frame
             glGetError();
             
+            // draw our first triangle
             glUseProgram(shaderProgram);
             glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glDrawArrays(GL_TRIANGLES, 0, 3);
-            glBindVertexArray(0);
+            // glBindVertexArray(0); // no need to unbind it every time 
 
             glfwSwapBuffers(perennial::rendering::GameWindow);
             glfwPollEvents();

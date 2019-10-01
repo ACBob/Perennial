@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "rendersystem/opengltoucher.h"
 #include "io/input.h"
+#include <iostream>
 #include "game.h"
 
 namespace perennial{
@@ -20,7 +21,6 @@ namespace perennial{
 
         while(GameRunning)
         {
-
             perennial::rendering::Frame();
             perennial::input::ProcessInput();
             if(perennial::input::CheckClose()) //Check if we're supposed to close.
