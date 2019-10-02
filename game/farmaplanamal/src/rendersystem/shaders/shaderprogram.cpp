@@ -1,5 +1,6 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "rendersystem/glerrors.h"
 #include <iostream>
 
 #include "shaderprogram.h"
@@ -13,7 +14,9 @@ namespace perennial{
             GLuint ShaderProgramId = glCreateProgram();
 
             glAttachShader(ShaderProgramId, VertexShader);
+            perennial::rendering::glCheckError();
             glAttachShader(ShaderProgramId, FragmentShader);
+            perennial::rendering::glCheckError();
 
             glLinkProgram(ShaderProgramId);
 
