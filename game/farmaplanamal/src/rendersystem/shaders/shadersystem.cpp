@@ -1,7 +1,8 @@
 #include "include/glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "fileio/open.h"
-#include "shaderloader.h"
+#include "shadersystem.h"
+#include "shaderprogram.h"
 #include "rendersystem/glerrors.h"
 #include <iostream>
 #include <string>
@@ -38,5 +39,47 @@ namespace perennial{
             return ShaderObject;
 
         }
+
+        class Shader{
+            public:
+                GLuint ID;
+                Shader(const std::string FilePath,GLuint Type){
+                    ID = LoadShader(FilePath,Type);
+                }
+                ~Shader(){
+                    Delete();
+                }
+                GLuint GetId()
+                {
+                    return ID;
+                }
+                void Delete()
+                {
+                    glDeleteShader(ID);
+                }
+        };
+        
+        class ShaderProgram{
+            public:
+                GLuint ID;
+                ShaderProgram(const GLuint Vertex, const GLuint Fragment){
+                    ID = perennial::shaders::CreateShaderProgram(Vertex,Fragment);
+                }
+                ~ShaderProgram(){
+                    Delete();
+                }
+                GLuint GetId()
+                {
+                    return ID;
+                }
+                void Use()
+                {
+                    glUseProgram(ID);
+                }
+                void Delete()
+                {
+                    glDeleteProgram(ID);
+                }
+        };
     }
 }

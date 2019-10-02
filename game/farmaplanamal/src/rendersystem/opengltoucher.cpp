@@ -11,7 +11,7 @@
 
 #include "opengltoucher.h"
 #include "glerrors.h"
-#include"shaders/shaderloader.h"
+#include"shaders/shadersystem.h"
 #include "rendersystem/shaders/shaderprogram.h"
 
 namespace perennial{
@@ -82,16 +82,15 @@ namespace perennial{
             glClearColor(0.7f, 0.2f, 0.4f, 1.0f);
 
 
-            GLuint vertexShader;
-            vertexShader = perennial::shaders::LoadShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
+            perennial::rendering::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             printf("perennial::render::compile_fragment\n");
-            GLuint fragmentShader;
-            fragmentShader = perennial::shaders::LoadShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
-
+            perennial::rendering::Shader fragmentShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
+            
             printf("perennial::render::make_program\n");
-            perennial::rendering::shaderProgram = perennial::shaders::CreateShaderProgram(vertexShader,fragmentShader);
-            glDeleteShader(vertexShader);
-            glDeleteShader(fragmentShader); 
+            perennial::rendering::ShaderProgram shaderProgram(vertexShader.GetId(),fragmentShader.GetId());
+            perennial::rendering::shaderProgram = shaderProgram.GetId();
+            vertexShader.Delete();
+            fragmentShader.Delete(); 
             glCheckError(); 
 
             printf("perennial::render::generate_vao and generate_vbo\n");
