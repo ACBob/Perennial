@@ -87,7 +87,7 @@ namespace perennial{
             perennial::shaders::Shader fragmentShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
             
             printf("perennial::render::make_program\n");
-            perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);
+            static perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);
             perennial::rendering::shaderProgram = shaderProgram;
             vertexShader.Delete();
             fragmentShader.Delete(); 
