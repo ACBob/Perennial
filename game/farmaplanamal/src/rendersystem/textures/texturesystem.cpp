@@ -4,15 +4,18 @@
 namespace perennial{
     namespace rendering{
         namespace textures{
-            int LoadImage(char* FilePath){
+            /*int LoadImage(char* FilePath){
                 int width, height, nrChannels;
                 unsigned char *data = stbi_load(FilePath, &width, &height, &nrChannels, 0); 
                 stbi_image_free(data);
                 return width, height, nrChannels;
-            }
+            }*/
             GLuint MakeTexture(char* FilePath){
                 
-                int width, height, nrChannels = LoadImage(FilePath);
+                int width, height, nrChannels;
+                unsigned char *data = stbi_load(FilePath, &width, &height, &nrChannels, 0); 
+                stbi_image_free(data);
+                return width, height, nrChannels;
                 unsigned int texture;
                 glGenTextures(1, &texture);
 

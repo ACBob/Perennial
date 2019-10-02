@@ -13,6 +13,7 @@
 #include "glerrors.h"
 #include"shaders/shadersystem.h"
 #include "rendersystem/shaders/shaderprogram.h"
+#include "rendersystem/textures/texturesystem.h"
 
 namespace perennial{
 
@@ -24,19 +25,16 @@ namespace perennial{
         perennial::shaders::ShaderProgram shaderProgram;
         unsigned int VAO;
 
+        unsigned int texture;
+
         
         float triVerts[] = {
-            // first triangle
-            0.5f,  0.5f, 0.0f, 1.0f, 0.3f, 0.5f, // top right
-            0.5f, -0.5f, 0.0f, 0.6f, 0.7f, 0.0f,  // bottom right
-            -0.5f,  0.5f, 0.0f, 0.2f, 0.5f, 0.7f  // top left 
+            // positions          // colors           // texture coords
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
         };   
-
-        float texCoords[] = {
-            0.0f, 0.0f,  // lower-left corner  
-            1.0f, 0.0f,  // lower-right corner
-            0.5f, 1.0f   // top-center corner
-        };
 
         int GetKey(GLFWwindow* GameWindow, int key)
         {
@@ -133,11 +131,15 @@ namespace perennial{
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
 
+            //Positions
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
-
+            //Colors
             glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
             glEnableVertexAttribArray(1);
+            //TexCoords
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+            glEnableVertexAttribArray(2);  
 
             // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
             glBindBuffer(GL_ARRAY_BUFFER, 0); 
@@ -146,6 +148,7 @@ namespace perennial{
             // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
             glBindVertexArray(0); 
 
+            texture = perennial::rendering::textures::MakeTexture("textures/wall.jpg");
 
             printf("perennial::render::init_end\n");
 
@@ -164,6 +167,7 @@ namespace perennial{
             glBindVertexArray(perennial::rendering::VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glCheckError();
             std::cout << perennial::rendering::VAO << std::endl;
+            glBindTexture(GL_TEXTURE_2D, perennial::rendering::texture);
             glDrawArrays(GL_TRIANGLES, 0, 6);
             glCheckError();
             // glBindVertexArray(0); // no need to unbind it every time 
