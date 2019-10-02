@@ -32,6 +32,12 @@ namespace perennial{
             -0.5f,  0.5f, 0.0f, 0.2f, 0.5f, 0.7f  // top left 
         };   
 
+        float texCoords[] = {
+            0.0f, 0.0f,  // lower-left corner  
+            1.0f, 0.0f,  // lower-right corner
+            0.5f, 1.0f   // top-center corner
+        };
+
         int GetKey(GLFWwindow* GameWindow, int key)
         {
             return glfwGetKey(GameWindow,key);
@@ -81,6 +87,16 @@ namespace perennial{
             glCheckError();
             glClearColor(0.7f, 0.2f, 0.4f, 1.0f);
 
+            //TEXTURE STUFF!
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //We're a pixelart. We don't do stretches here.
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
             perennial::shaders::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             printf("perennial::render::compile_fragment\n");
