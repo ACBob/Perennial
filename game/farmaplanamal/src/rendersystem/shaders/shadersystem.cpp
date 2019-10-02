@@ -40,46 +40,38 @@ namespace perennial{
 
         }
 
-        class Shader{
-            public:
-                GLuint ID;
-                Shader(const std::string FilePath,GLuint Type){
-                    ID = LoadShader(FilePath,Type);
-                }
-                ~Shader(){
-                    Delete();
-                }
-                GLuint GetId()
-                {
-                    return ID;
-                }
-                void Delete()
-                {
-                    glDeleteShader(ID);
-                }
-        };
-        
-        class ShaderProgram{
-            public:
-                GLuint ID;
-                ShaderProgram(const GLuint Vertex, const GLuint Fragment){
-                    ID = perennial::shaders::CreateShaderProgram(Vertex,Fragment);
-                }
-                ~ShaderProgram(){
-                    Delete();
-                }
-                GLuint GetId()
-                {
-                    return ID;
-                }
-                void Use()
-                {
-                    glUseProgram(ID);
-                }
-                void Delete()
-                {
-                    glDeleteProgram(ID);
-                }
-        };
+        perennial::rendering::Shader::Shader(const std::string FilePath,GLuint Type){
+            this->ID = perennial::shaders::LoadShader(FilePath,Type);
+        }
+        perennial::rendering::Shader::~Shader(){
+            this->Delete();
+        }
+        GLuint perennial::rendering::Shader::GetId()
+        {
+            return this->ID;
+        }
+        void perennial::rendering::Shader::Delete()
+        {
+            glDeleteShader(this->ID);
+        }
+
+        perennial::rendering::ShaderProgram::ShaderProgram(const GLuint Vertex, const GLuint Fragment){
+            this->ID = perennial::shaders::CreateShaderProgram(Vertex,Fragment);
+        }
+        perennial::rendering::ShaderProgram::~ShaderProgram(){
+            Delete();
+        }
+        GLuint perennial::rendering::ShaderProgram::GetId()
+        {
+            return this->ID;
+        }
+        void perennial::rendering::ShaderProgram::Use()
+        {
+            glUseProgram(this->ID);
+        }
+        void perennial::rendering::ShaderProgram::Delete()
+        {
+            glDeleteProgram(this->ID);
+        }
     }
 }
