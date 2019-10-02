@@ -84,7 +84,7 @@ namespace perennial{
 
             perennial::shaders::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             printf("perennial::render::compile_fragment\n");
-            perennial::shaders::Shader fragmentShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
+            perennial::shaders::Shader fragmentShader("shaders/vertex.glsl",GL_FRAGMENT_SHADER);
             
             printf("perennial::render::make_program\n");
             perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);

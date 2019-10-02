@@ -13,6 +13,8 @@ namespace perennial{
             
             GLuint ShaderProgramId = glCreateProgram();
 
+            std::cout << VertexShader << "  " << FragmentShader << std::endl;
+
             glAttachShader(ShaderProgramId, VertexShader);
             perennial::rendering::glCheckError();
             glAttachShader(ShaderProgramId, FragmentShader);
@@ -25,6 +27,7 @@ namespace perennial{
             if(!success) {
                 glGetProgramInfoLog(ShaderProgramId, 512, NULL, infoLog);
                 std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED" << std::endl;
+                std::cout << infoLog << std::endl;
             }
 
             return ShaderProgramId;
