@@ -47,8 +47,8 @@ namespace perennial{
             printf("perennial::render::init\n");
 
             glfwInit();
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.5);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4.5);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
             #ifdef __APPLE__
                 glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //Don't worry, Apple is UNIX so we will do this.
@@ -102,6 +102,7 @@ namespace perennial{
                 std::cout << "We've fucked up the VAO." << std::endl;
                 return -1;
             }
+            std::cout << VAO << std::endl;
             glGenBuffers(1, &VBO);
             if (!VBO)
             {
@@ -146,12 +147,14 @@ namespace perennial{
             perennial::rendering::shaderProgram.Use();
             glBindVertexArray(perennial::rendering::VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glCheckError();
+            std::cout << perennial::rendering::VAO << std::endl;
             glDrawArrays(GL_TRIANGLES, 0, 6);
             glCheckError();
             // glBindVertexArray(0); // no need to unbind it every time 
 
             glfwSwapBuffers(perennial::rendering::GameWindow);
             glfwPollEvents();
+            
             glGetError();
         }
 
