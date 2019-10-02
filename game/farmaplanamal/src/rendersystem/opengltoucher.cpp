@@ -26,10 +26,15 @@ namespace perennial{
 
         
         float triVerts[] = {
-            -0.5f, -0.5f, 0.0f, // left  
-            0.5f, -0.5f, 0.0f, // right 
-            0.0f,  0.5f, 0.0f  // top   
-        };      
+            // first triangle
+            0.5f,  0.5f, 0.0f,  // top right
+            0.5f, -0.5f, 0.0f,  // bottom right
+            -0.5f,  0.5f, 0.0f,  // top left 
+            // second triangle
+            0.5f, -0.5f, 0.0f,  // bottom right
+            -0.5f, -0.5f, 0.0f,  // bottom left
+            -0.5f,  0.5f, 0.0f   // top left
+        };   
 
         int GetKey(GLFWwindow* GameWindow, int key)
         {
@@ -143,7 +148,7 @@ namespace perennial{
             glUseProgram(perennial::rendering::shaderProgram);
             glBindVertexArray(perennial::rendering::VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glCheckError();
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
             glCheckError();
             // glBindVertexArray(0); // no need to unbind it every time 
 
