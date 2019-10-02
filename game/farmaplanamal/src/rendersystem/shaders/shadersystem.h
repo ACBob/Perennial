@@ -2,7 +2,7 @@
 #include <string>
 
 namespace perennial{
-    namespace rendering{
+    namespace shaders{
         class Shader
         {
             public:

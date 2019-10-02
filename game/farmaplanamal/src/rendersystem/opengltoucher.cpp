@@ -82,12 +82,12 @@ namespace perennial{
             glClearColor(0.7f, 0.2f, 0.4f, 1.0f);
 
 
-            perennial::rendering::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
+            perennial::shaders::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             printf("perennial::render::compile_fragment\n");
-            perennial::rendering::Shader fragmentShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
+            perennial::shaders::Shader fragmentShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             
             printf("perennial::render::make_program\n");
-            perennial::rendering::ShaderProgram shaderProgram(vertexShader.GetId(),fragmentShader.GetId());
+            perennial::shaders::ShaderProgram shaderProgram(vertexShader.GetId(),fragmentShader.GetId());
             perennial::rendering::shaderProgram = shaderProgram.GetId();
             vertexShader.Delete();
             fragmentShader.Delete(); 

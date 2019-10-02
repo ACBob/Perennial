@@ -40,36 +40,36 @@ namespace perennial{
 
         }
 
-        perennial::rendering::Shader::Shader(const std::string FilePath,GLuint Type){
+        Shader::Shader(const std::string FilePath,GLuint Type){
             this->ID = perennial::shaders::LoadShader(FilePath,Type);
         }
-        perennial::rendering::Shader::~Shader(){
+        Shader::~Shader(){
             this->Delete();
         }
-        GLuint perennial::rendering::Shader::GetId()
+        GLuint Shader::GetId()
         {
             return this->ID;
         }
-        void perennial::rendering::Shader::Delete()
+        void Shader::Delete()
         {
             glDeleteShader(this->ID);
         }
 
-        perennial::rendering::ShaderProgram::ShaderProgram(const GLuint Vertex, const GLuint Fragment){
+        ShaderProgram::ShaderProgram(const GLuint Vertex, const GLuint Fragment){
             this->ID = perennial::shaders::CreateShaderProgram(Vertex,Fragment);
         }
-        perennial::rendering::ShaderProgram::~ShaderProgram(){
+        ShaderProgram::~ShaderProgram(){
             Delete();
         }
-        GLuint perennial::rendering::ShaderProgram::GetId()
+        GLuint ShaderProgram::GetId()
         {
             return this->ID;
         }
-        void perennial::rendering::ShaderProgram::Use()
+        void ShaderProgram::Use()
         {
             glUseProgram(this->ID);
         }
-        void perennial::rendering::ShaderProgram::Delete()
+        void ShaderProgram::Delete()
         {
             glDeleteProgram(this->ID);
         }
