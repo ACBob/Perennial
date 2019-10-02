@@ -49,6 +49,7 @@ namespace perennial{
             this->ID = perennial::shaders::LoadShader(FilePath,Type);
         }
         Shader::~Shader(){
+            std::cout << "Shader Destructor Called" << std::endl;
             this->Delete();
         }
         GLuint Shader::GetId()
@@ -69,6 +70,7 @@ namespace perennial{
             this->ID = perennial::shaders::CreateShaderProgram(Vertex,Fragment);
         }
         ShaderProgram::~ShaderProgram(){
+            std::cout << "ShaderProgram Destructor called" << std::endl;
             Delete();
         }
         GLuint ShaderProgram::GetId()
