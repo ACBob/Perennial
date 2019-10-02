@@ -1,4 +1,7 @@
+#ifndef OPENGL_TOUCHER_H
+#define OPENGL_TOUCHER_H
 #include "GLFW/glfw3.h"
+#include "shaders/shadersystem.h"
 namespace perennial{
     namespace rendering{
         extern GLFWwindow* GameWindow;
@@ -12,7 +15,8 @@ namespace perennial{
 
         extern float triVerts[];
         extern unsigned int VBO;
-        extern unsigned int shaderProgram;
+        extern perennial::shaders::ShaderProgram shaderProgram;
         extern unsigned int VAO;
     }
 }
+#endif

@@ -1,4 +1,6 @@
-#include "glad/glad.h"
+#ifndef SHADER_SYSTEM_H
+#define SHADER_SYSTEM_H
+#include "GLFW/glfw3.h"
 #include <string>
 
 namespace perennial{
@@ -7,6 +9,7 @@ namespace perennial{
         {
             public:
                 GLuint ID;
+                Shader();
                 Shader(const std::string FilePath, GLuint Type);
                 ~Shader();
 
@@ -18,6 +21,7 @@ namespace perennial{
         {
             public:
                 GLuint ID;
+                ShaderProgram();
                 ShaderProgram(const GLuint Vertex, const GLuint Fragment);
                 ~ShaderProgram();
 
@@ -27,3 +31,4 @@ namespace perennial{
         };
     }
 }
+#endif

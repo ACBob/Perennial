@@ -40,6 +40,11 @@ namespace perennial{
 
         }
 
+        Shader::Shader()
+        {
+            std::cout << "Default Constructor for Shader, assuming NULL.";
+            this->ID = 0;
+        }
         Shader::Shader(const std::string FilePath,GLuint Type){
             this->ID = perennial::shaders::LoadShader(FilePath,Type);
         }
@@ -55,6 +60,11 @@ namespace perennial{
             glDeleteShader(this->ID);
         }
 
+        ShaderProgram::ShaderProgram()
+        {
+            std::cout << "Default constructor called for ShaderProgram, assuming NULL.";
+            this->ID = 0;
+        }
         ShaderProgram::ShaderProgram(const GLuint Vertex, const GLuint Fragment){
             this->ID = perennial::shaders::CreateShaderProgram(Vertex,Fragment);
         }
@@ -67,7 +77,7 @@ namespace perennial{
         }
         void ShaderProgram::Use()
         {
-            glUseProgram(this->ID);
+            glUseProgram(ID);
         }
         void ShaderProgram::Delete()
         {

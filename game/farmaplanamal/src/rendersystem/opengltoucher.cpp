@@ -21,7 +21,7 @@ namespace perennial{
         GLFWwindow* GameWindow;
 
         unsigned int VBO;
-        unsigned int shaderProgram;
+        perennial::shaders::ShaderProgram shaderProgram;
         unsigned int VAO;
 
         
@@ -87,8 +87,8 @@ namespace perennial{
             perennial::shaders::Shader fragmentShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             
             printf("perennial::render::make_program\n");
-            perennial::shaders::ShaderProgram shaderProgram(vertexShader.GetId(),fragmentShader.GetId());
-            perennial::rendering::shaderProgram = shaderProgram.GetId();
+            perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);
+            perennial::rendering::shaderProgram = shaderProgram;
             vertexShader.Delete();
             fragmentShader.Delete(); 
             glCheckError(); 
@@ -143,7 +143,7 @@ namespace perennial{
             glGetError();
             
             // draw our first triangle
-            glUseProgram(perennial::rendering::shaderProgram);
+            perennial::rendering::shaderProgram.Use();
             glBindVertexArray(perennial::rendering::VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glCheckError();
             glDrawArrays(GL_TRIANGLES, 0, 6);
