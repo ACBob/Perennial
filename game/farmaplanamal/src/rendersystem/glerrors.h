@@ -1,3 +1,5 @@
+#ifndef GLERRORS
+#define GLERRORS
 #include "GLFW/glfw3.h"
 namespace perennial{
     namespace rendering{
@@ -12,3 +14,4 @@ namespace perennial{
                                     void *userParam);
     }
 }
+#endif
