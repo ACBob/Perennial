@@ -30,10 +30,9 @@ namespace perennial{
         
         float triVerts[] = {
             // positions          // colors           // texture coords
-            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+            -0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+            0.5f, 0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+            0.0f, 0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left 
         };   
 
         int GetKey(GLFWwindow* GameWindow, int key)
@@ -148,7 +147,7 @@ namespace perennial{
             // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
             glBindVertexArray(0); 
 
-            texture = perennial::rendering::textures::MakeTexture("textures/wall.jpg");
+            texture = perennial::rendering::textures::MakeTexture(std::string("textures/wall.jpg"));
 
             printf("perennial::render::init_end\n");
 
