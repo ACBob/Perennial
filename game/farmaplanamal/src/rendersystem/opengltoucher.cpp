@@ -30,9 +30,9 @@ namespace perennial{
         
         float triVerts[] = {
             // positions          // colors           // texture coords
-            -0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-            0.5f, 0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-            0.0f, 0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left 
+            -0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   -0.5f, -0.5f,   // top right
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.5f, -0.5f,   // bottom right
+            0.0f, 0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.5f,   // bottom left 
         };   
 
         int GetKey(GLFWwindow* GameWindow, int key)
@@ -131,10 +131,10 @@ namespace perennial{
             glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
 
             //Positions
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
-            //Colors
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
+            //Colours
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3* sizeof(float)));
             glEnableVertexAttribArray(1);
             //TexCoords
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
@@ -165,7 +165,7 @@ namespace perennial{
             perennial::rendering::shaderProgram.Use();
             glBindVertexArray(perennial::rendering::VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glCheckError();
-            std::cout << perennial::rendering::VAO << std::endl;
+            //std::cout << perennial::rendering::VAO << std::endl;
             glBindTexture(GL_TEXTURE_2D, perennial::rendering::texture);
             glDrawArrays(GL_TRIANGLES, 0, 6);
             glCheckError();
