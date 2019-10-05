@@ -20,8 +20,11 @@ class GuiPerennialMaker:
         self.lblTitle.grid(row=0)
         #lblTitle.pack()
 
+        self.lblCurFile = tkinter.Label(self.frame, text="")
+        self.lblCurFile.grid(row=2,column=0)
+
         self.prgProgress = Progressbar(self.frame)
-        self.prgProgress.grid(row=2,column=0)
+        self.prgProgress.grid(row=3,column=0)
 
         self.lstProjects = tkinter.Listbox(self.frame)
         self.lstProjects.grid(row=1,column=0)
@@ -30,7 +33,7 @@ class GuiPerennialMaker:
         for i in range(len(self.projects)):
             self.lstProjects.insert(i+1,self.projects[i])
         self.cmdMake = tkinter.Button(self.frame, text="Make Makefile",command=self.do_it_all)
-        self.cmdMake.grid(row=3,column=0)
+        self.cmdMake.grid(row=4,column=0)
         #cmdTest.pack()
 
     def hide(self):
@@ -47,7 +50,7 @@ class GuiPerennialMaker:
         project = self.projects[self.lstProjects.curselection()[0]]
         source = os.listdir('./game/%s/src'%(project))
         self.prgProgress["maximum"] = GetSize('./game/%s/src'%(project))
-        final = SearchThrough(os.path.abspath('./game/%s/src'%(project)),self.prgProgress)
+        final = SearchThrough(os.path.abspath('./game/%s/src'%(project)),self.prgProgress,self.lblCurFile)
         makefile = open('./game/%s/makefile'%(project),'w+')
 
         windows = (os.name == "nt")
@@ -69,6 +72,8 @@ class GuiPerennialMaker:
         makefile.writelines(lines)
         makefile.close()
 
+        self.lblCurFile["text"] = ""
+
         messagebox.showinfo("Info","Done!")
 
 def clearscreen():
@@ -85,12 +90,13 @@ def GetSize(path):
 
     return val
 
-def SearchThrough(path,prgProgress):
+def SearchThrough(path,prgProgress,lblCurFile):
     contents = os.listdir(path)
     cpp = []
     for filen in range(len(contents)):
         prgProgress.step()
         prgProgress.update()
+        lblCurFile["text"] = contents[filen]
         file = contents[filen]
         #sys.stdout.write("\r%d%%"%(100*(filen/len(contents))))
         #sys.stdout.flush()
@@ -99,7 +105,7 @@ def SearchThrough(path,prgProgress):
             #sys.stdout.write(path+'/'+file+'\n')
             #sys.stdout.flush()
             if os.path.isdir(path+'/'+file):
-                cpp+=SearchThrough(path+'/'+file,prgProgress)
+                cpp+=SearchThrough(path+'/'+file,prgProgress,lblCurFile)
             elif file[-4:] == ".cpp":
                 cpp.append(path+'/'+file)
         except:
