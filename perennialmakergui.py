@@ -23,7 +23,7 @@ class GuiPerennialMaker:
         self.lblCurFile = tkinter.Label(self.frame, text="")
         self.lblCurFile.grid(row=2,column=0)
 
-        self.prgProgress = Progressbar(self.frame)
+        self.prgProgress = Progressbar(self.frame,length=200)
         self.prgProgress.grid(row=3,column=0)
 
         self.lstProjects = tkinter.Listbox(self.frame)
@@ -58,7 +58,7 @@ class GuiPerennialMaker:
         if windows:
             messagebox.showinfo("Hmm...","We've detected a windows system.\nMakefile may not work!\n(It requires GCC!)")
 
-        command='g++'
+        command='gcc'
         
         lines = ['','','','','','']
         lines[0] = "COMPILER="+command
@@ -67,7 +67,7 @@ class GuiPerennialMaker:
         lines[3] = "\nRESULT=main.app\n"
 
         lines[4] = "all: ; "
-        lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGL -lglfw -lX11 -lpthread -ldl"
+        lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGl -lglfw -lX11 -lpthread -ldl"
 
         makefile.writelines(lines)
         makefile.close()
@@ -106,7 +106,7 @@ def SearchThrough(path,prgProgress,lblCurFile):
             #sys.stdout.flush()
             if os.path.isdir(path+'/'+file):
                 cpp+=SearchThrough(path+'/'+file,prgProgress,lblCurFile)
-            elif file[-4:] == ".cpp" or file[-2:] == ".c":
+            elif file[-4:] == ".cpp":
                 cpp.append(path+'/'+file)
         except:
             continue
