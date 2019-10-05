@@ -1,7 +1,7 @@
 {
 
     "version": "2.0.0",
-    "command": "g++",
+    "command": "make",
     "type": "shell",
     "reveal": true,
     "tasks":[
@@ -12,26 +12,7 @@
                 "isDefault": true
             },
             "args": [
-                "-Wall", //Enables warnings(?)
-                "-g","-std=c++11",
-                //Compile Files
-                "game/farmaplanamal/src/main.cpp",
-                "game/farmaplanamal/src/glad.c",
-                "game/farmaplanamal/src/rendersystem/opengltoucher.cpp",
-                "game/farmaplanamal/src/game.cpp",
-                "game/farmaplanamal/src/io/input.cpp",
-                "game/farmaplanamal/src/rendersystem/glerrors.cpp",
-                "game/farmaplanamal/src/fileio/open.cpp",
-                "game/farmaplanamal/src/rendersystem/shaders/shadersystem.cpp",
-                "game/farmaplanamal/src/rendersystem/shaders/shaderprogram.cpp",
-                "game/farmaplanamal/src/rendersystem/textures/texturesystem.cpp",
-                
-
-                "-o","game/farmaplanamal/main.app",
-                "-lGL","-lglfw",
-                "-I","game/farmaplanamal/src/include",
-                "-I","game/farmaplanamal/src",
-                "-lX11", "-lpthread", "-ldl" //Magic Make-it-Works from learnopengl.com
+                "-f","game/farmaplanamal/makefile"
             ],
             "problemMatcher": [
                 "$gcc"
