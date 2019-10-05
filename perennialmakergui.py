@@ -58,7 +58,7 @@ class GuiPerennialMaker:
         if windows:
             messagebox.showinfo("Hmm...","We've detected a windows system.\nMakefile may not work!\n(It requires GCC!)")
 
-        command='gcc'
+        command='g++'
         
         lines = ['','','','','','']
         lines[0] = "COMPILER="+command
@@ -67,7 +67,7 @@ class GuiPerennialMaker:
         lines[3] = "\nRESULT=main.app\n"
 
         lines[4] = "all: ; "
-        lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGl -lglfw -lX11 -lpthread -ldl"
+        lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGL -lglfw -lX11 -lpthread -ldl"
 
         makefile.writelines(lines)
         makefile.close()
@@ -106,7 +106,7 @@ def SearchThrough(path,prgProgress,lblCurFile):
             #sys.stdout.flush()
             if os.path.isdir(path+'/'+file):
                 cpp+=SearchThrough(path+'/'+file,prgProgress,lblCurFile)
-            elif file[-4:] == ".cpp":
+            elif file[-4:] == ".cpp" or file[-2:] == ".c":
                 cpp.append(path+'/'+file)
         except:
             continue

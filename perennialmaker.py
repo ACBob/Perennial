@@ -25,7 +25,7 @@ def SearchThrough(path):
             sys.stdout.flush()
             if os.path.isdir(path+'/'+file):
                 cpp+=SearchThrough(path+'/'+file)
-            elif file[-4:] == ".cpp":
+            elif file[-4:] == ".cpp" or file[-2:] == ".c":
                 cpp.append(path+'/'+file)
         except:
             continue
@@ -58,13 +58,13 @@ def main():
     if windows:
         clearscreen()
         print("Detected Windows System, Please specify your Terminal command you use to compile!")
-        print("WARNING: May not work, this is setup for GCC!")
+        print("WARNING: May not work, this is setup for G++!")
         print("I'm not even sure that windows supports make..")
         command = input('> ')
     else:
         clearscreen()
-        print("Detected Linux/Mac, assuming GCC as compiler.")
-        command = 'gcc'
+        print("Detected Linux/Mac, assuming G++ as compiler.")
+        command = 'g++'
     print("Done!")
     print("Generating makefile...")
     makefile = open('./game/%s/makefile'%(project),'w+')
@@ -76,7 +76,7 @@ def main():
     lines[3] = "\nRESULT=main.app\n"
 
     lines[4] = "all: ; "
-    lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGl -lglfw -lX11 -lpthread -ldl"
+    lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGL -lglfw -lX11 -lpthread -ldl"
 
     makefile.writelines(lines)
     makefile.close()
