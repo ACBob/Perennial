@@ -1,5 +1,5 @@
 #include <iostream>
-#include "universal/license.cpp"
+#include "universal/license.h"
 #include "game.h"
 
 #define P_VERSION "0";
