@@ -95,6 +95,7 @@ namespace perennial{
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+            printf("perennial::render::compile_vertex\n");
             perennial::shaders::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
             printf("perennial::render::compile_fragment\n");
             perennial::shaders::Shader fragmentShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
