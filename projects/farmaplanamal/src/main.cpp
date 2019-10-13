@@ -7,7 +7,7 @@ int main()
     void* handle = dlopen("./bin/engine.so", RTLD_LAZY);
     typedef int(*engine_game_loop)();
 
-    engine_game_loop GameLoop = (engine_game_loop)dlsym(handle, "perennial::GameLoop");
+    engine_game_loop GameLoop = (engine_game_loop)dlsym(handle, "GameLoop");
 
     if(GameLoop)
         GameLoop();
