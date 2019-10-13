@@ -10,6 +10,35 @@ if not sys.stdout.isatty():
     messagebox.showinfo("Uh... This is awkward.","We've detected a GUI.\nPerennialMake-r can't be run in a GUI.\nyet...")
     exit(-1)
 
+
+def ProcessFile(path):
+    file = open(path,'r')
+    filelines = file.readlines()
+
+    compileargs = []
+    paths = []
+
+    for linen in range(len(filelines)):
+        line=filelines[linen].strip()
+        if line == '':
+            continue
+        elif line[0:2] == '//':
+            continue
+        elif line[0] == '$':
+            compileargs.append(line.replace('$',''))
+        elif line[0:2] == '-f': 
+            paths.append(line[3:].replace('*',''))
+        else:
+            print("Syntax Error "+path+":"+str(linen)+"\nUnexpected "+line)
+            return [[],[]]
+            
+        #print(line)
+
+    print(compileargs)
+    print(paths)
+    file.close()
+    return paths,compileargs
+
 def clearscreen():
     os.system('clear' if not os.name == 'nt' else 'clear')
 
@@ -82,4 +111,4 @@ def main():
     makefile.close()
     print("Done!")
 
-main()
+#main()

@@ -55,6 +55,8 @@ class GuiPerennialMaker:
 
         windows = (os.name == "nt")
 
+        Engine = messagebox.askyesno("Hey..","Is this the engine?")
+
         if windows:
             messagebox.showinfo("Hmm...","We've detected a windows system.\nMakefile may not work!\n(It requires GCC!)")
 
@@ -64,10 +66,10 @@ class GuiPerennialMaker:
         lines[0] = "COMPILER="+command
         lines[1] = "\nPROJECT="+project
         lines[2] = "\nSRCDIR="+os.path.abspath('./game/%s/src'%(project))
-        lines[3] = "\nRESULT=main.app\n"
+        lines[3] = "\nRESULT=libengine.so\n" if Engine else "\nRESULT=main.app\n"
 
         lines[4] = "all: ; "
-        lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGl -lglfw -lX11 -lpthread -ldl"
+        lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) "+("-lGL -lglfw -lX11 -lpthread -ldl "+("-shared -fPIC" if Engine else "")+("-I "+os.path.abspath('./game/engine/src')+" -L "+os.path.abspath("./game/%s/bin"%(project))+" -lengine" if not Engine else ""))
 
         makefile.writelines(lines)
         makefile.close()
