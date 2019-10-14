@@ -42,15 +42,51 @@ namespace perennial{
 
         
         float triVerts[] = {
-            // positions      //Colours         // texture coords
-            0.5f,  0.5f, 0.0f,    1.0f, 1.0f, 1.0f,   1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f,    1.0f, 1.0f, 1.0f,   1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left  
+            -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,  0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 0.0f,
+
+            -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 0.0f, 0.0f,
+
+            -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+
+            0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+
+            -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f,
+            0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f, 0.0f, 1.0f
         };   
         unsigned int indices[] = {
-            0, 1, 3, // first triangle
-            1, 2, 3  // second triangle
+            //0, 1, 3, // first triangle
+            //1, 2, 3  // second triangle
         };
 
         int GetKey(GLFWwindow* GameWindow, int key)
@@ -155,7 +191,7 @@ namespace perennial{
             glBindVertexArray(VAO);
 
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(perennial::rendering::triVerts), perennial::rendering::triVerts, GL_STATIC_DRAW);
 
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(perennial::rendering::indices), perennial::rendering::indices, GL_STATIC_DRAW);
@@ -233,7 +269,7 @@ namespace perennial{
             int projectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
             glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::proj));
 
-            glDrawArrays(GL_TRIANGLES, 0, 6);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
             glCheckError();
             // glBindVertexArray(0); // no need to unbind it every time 
 
