@@ -15,6 +15,10 @@
 #include "rendersystem/shaders/shaderprogram.h"
 #include "rendersystem/textures/texturesystem.h"
 
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace perennial{
 
     namespace rendering{
@@ -26,6 +30,14 @@ namespace perennial{
         unsigned int VAO;
 
         unsigned int texture;
+
+        int projLoc;
+        int viewLoc;
+        int modelLoc;
+
+        glm::mat4 proj;
+        glm::mat4 view;
+        glm::mat4 model;
 
         
         float triVerts[] = {
@@ -102,7 +114,7 @@ namespace perennial{
             
             printf("perennial::render::make_program\n");
             static perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);
-            perennial::rendering::shaderProgram = shaderProgram;
+            perennial::rendering::shaderProgram = shaderProgram;        
             vertexShader.Delete();
             fragmentShader.Delete(); 
             glCheckError(); 
@@ -152,6 +164,33 @@ namespace perennial{
 
             printf("perennial::render::init_end\n");
 
+
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::rotate(model, glm::radians(55.0f), glm::vec3(1.0f, 0.0f, 0.0f)); 
+            
+            glm::mat4 view = glm::mat4(1.0f);
+            // note that we're translating the scene in the reverse direction of where we want to move
+            view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f)); 
+
+            glm::mat4 projection;
+            projection = glm::perspective(glm::radians(-45.0f), (float)(800 / 600), 0.1f, 100.0f);
+
+            perennial::rendering::proj = projection;
+            perennial::rendering::model = model;
+            perennial::rendering::view = view;
+
+            int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
+            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+            int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
+            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+            int projectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
+            glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+
+            perennial::rendering::projLoc = projectionLoc;
+            perennial::rendering::modelLoc = modelLoc;
+            perennial::rendering::viewLoc = viewLoc;
+
             return 0;
 
         }
@@ -168,6 +207,14 @@ namespace perennial{
             glCheckError();
             //std::cout << perennial::rendering::VAO << std::endl;
             glBindTexture(GL_TEXTURE_2D, perennial::rendering::texture);
+
+            int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
+            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::model));
+            int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
+            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::view));
+            int projectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
+            glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::proj));
+
             glDrawArrays(GL_TRIANGLES, 0, 6);
             glCheckError();
             // glBindVertexArray(0); // no need to unbind it every time 
