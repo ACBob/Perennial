@@ -262,6 +262,8 @@ namespace perennial{
             //std::cout << perennial::rendering::VAO << std::endl;
             glBindTexture(GL_TEXTURE_2D, perennial::rendering::texture);
 
+            perennial::rendering::model = glm::rotate(perennial::rendering::model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+
             int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::model));
             int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
