@@ -28,6 +28,7 @@ namespace perennial{
         unsigned int VBO;
         perennial::shaders::ShaderProgram shaderProgram;
         unsigned int VAO;
+        unsigned int EBO;
 
         unsigned int texture;
 
@@ -41,11 +42,16 @@ namespace perennial{
 
         
         float triVerts[] = {
-            // positions          // colors           // texture coords
-            -0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   -0.5f, -0.5f,   // top right
-            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.5f, -0.5f,   // bottom right
-            0.0f, 0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.5f,   // bottom left 
+            // positions      //Colours         // texture coords
+            0.5f,  0.5f, 0.0f,    1.0f, 1.0f, 1.0f,   1.0f, 1.0f, // top right
+            0.5f, -0.5f, 0.0f,    1.0f, 1.0f, 1.0f,   1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left  
         };   
+        unsigned int indices[] = {
+            0, 1, 3, // first triangle
+            1, 2, 3  // second triangle
+        };
 
         int GetKey(GLFWwindow* GameWindow, int key)
         {
@@ -120,7 +126,7 @@ namespace perennial{
             glCheckError(); 
 
             printf("perennial::render::generate_vao and generate_vbo\n");
-            unsigned int VBO, VAO;
+            unsigned int VBO, VAO, EBO;
 
             glGenVertexArrays(1, &VAO);
             if (!VAO)
@@ -135,13 +141,25 @@ namespace perennial{
                 std::cout << "We've fucked up the VBO." << std::endl;
                 return -1;
             }
+            glGenBuffers(1, &EBO);
+            if (!EBO)
+            {
+                std::cout << "We've fucked up the EBO." << std::endl;
+                return -1;
+            }
+
             perennial::rendering::VAO = VAO;
             perennial::rendering::VBO = VBO;
+            perennial::rendering::EBO = EBO;
             // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
             glBindVertexArray(VAO);
 
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);
+
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(perennial::rendering::indices), perennial::rendering::indices, GL_STATIC_DRAW);
+
 
             //Positions
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
