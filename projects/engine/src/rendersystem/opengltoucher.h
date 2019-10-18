@@ -1,5 +1,6 @@
 #ifndef OPENGL_TOUCHER_H
 #define OPENGL_TOUCHER_H
+extern "C"{
 #include "GLFW/glfw3.h"
 #include "shaders/shadersystem.h"
 namespace perennial{
@@ -18,5 +19,5 @@ namespace perennial{
         extern perennial::shaders::ShaderProgram shaderProgram;
         extern unsigned int VAO;
     }
-}
+}}
 #endif

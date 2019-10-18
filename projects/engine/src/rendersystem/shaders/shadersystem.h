@@ -1,5 +1,6 @@
 #ifndef SHADER_SYSTEM_H
 #define SHADER_SYSTEM_H
+extern "C"{
 #include "GLFW/glfw3.h"
 #include <string>
 
@@ -30,5 +31,5 @@ namespace perennial{
                 void deleteThis();
         };
     }
-}
+}}
 #endif

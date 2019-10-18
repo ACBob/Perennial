@@ -1,5 +1,6 @@
 #ifndef GLERRORS
 #define GLERRORS
+extern "C"{
 #include "GLFW/glfw3.h"
 namespace perennial{
     namespace rendering{
@@ -13,5 +14,5 @@ namespace perennial{
                                     const GLchar *message, 
                                     void *userParam);
     }
-}
+}}
 #endif
