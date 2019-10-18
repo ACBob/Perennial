@@ -1,8 +1,8 @@
 #ifndef OPENGL_TOUCHER_H
 #define OPENGL_TOUCHER_H
-extern "C"{
 #include "GLFW/glfw3.h"
 #include "shaders/shadersystem.h"
+extern "C"{
 namespace perennial{
     namespace rendering{
         extern GLFWwindow* GameWindow;

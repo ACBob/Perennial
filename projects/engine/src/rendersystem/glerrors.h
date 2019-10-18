@@ -1,7 +1,7 @@
 #ifndef GLERRORS
 #define GLERRORS
-extern "C"{
 #include "GLFW/glfw3.h"
+extern "C"{
 namespace perennial{
     namespace rendering{
         GLenum glCheckError_(const char *file, int line);

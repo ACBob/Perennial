@@ -1,9 +1,8 @@
 #ifndef TEXTURE_SYSTEM_H
 #define TEXTURE_SYSTEM_H
-extern "C"{
-
 #include "glad/glad.h"
 #include <string>
+extern "C"{
 namespace perennial{
     namespace rendering{
         namespace textures{

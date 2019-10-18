@@ -1,7 +1,7 @@
 #ifndef OPEN_H
 #define OPEN_H
-extern "C"{
 #include <string>
+extern "C"{
 namespace perennial{
     namespace fileio{
         std::string s_openFile(std::string FileName);
