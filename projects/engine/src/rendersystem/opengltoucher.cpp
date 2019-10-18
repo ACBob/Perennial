@@ -32,9 +32,9 @@ namespace perennial{
 
         unsigned int texture;
 
-        int projLoc;
-        int viewLoc;
-        int modelLoc;
+        int iProjLoc;
+        int iViewLoc;
+        int iModelLoc;
 
         glm::mat4 proj;
         glm::mat4 view;
@@ -89,17 +89,17 @@ namespace perennial{
             //1, 2, 3  // second triangle
         };
 
-        int GetKey(GLFWwindow* GameWindow, int key)
+        int getKey(GLFWwindow* GameWindow, int key)
         {
             return glfwGetKey(GameWindow,key);
         }
 
-        void SetWindowShouldClose(GLFWwindow* GameWindow, bool shouldClose)
+        void setWindowShouldClose(GLFWwindow* GameWindow, bool shouldClose)
         {
             glfwSetWindowShouldClose(GameWindow,(int)shouldClose);
         }
 
-        int Init(){
+        int i_init(){
 
             printf("perennial::render::init\n");
 
@@ -157,8 +157,8 @@ namespace perennial{
             printf("perennial::render::make_program\n");
             static perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);
             perennial::rendering::shaderProgram = shaderProgram;        
-            vertexShader.Delete();
-            fragmentShader.Delete(); 
+            vertexShader.deleteThis();
+            fragmentShader.deleteThis(); 
             glCheckError(); 
 
             printf("perennial::render::generate_vao and generate_vbo\n");
@@ -214,7 +214,7 @@ namespace perennial{
             // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
             glBindVertexArray(0); 
 
-            texture = perennial::rendering::textures::MakeTexture(std::string("textures/wall.jpg"));
+            texture = perennial::rendering::textures::makeTexture(std::string("textures/wall.jpg"));
 
             printf("perennial::render::init_end\n");
 
@@ -233,30 +233,30 @@ namespace perennial{
             perennial::rendering::model = model;
             perennial::rendering::view = view;
 
-            int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-            int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-            int projectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
-            glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+            int iModelLoc = glGetUniformLocation(shaderProgram.ID, "model");
+            glUniformMatrix4fv(iModelLoc, 1, GL_FALSE, glm::value_ptr(model));
+            int iViewLoc = glGetUniformLocation(shaderProgram.ID, "view");
+            glUniformMatrix4fv(iViewLoc, 1, GL_FALSE, glm::value_ptr(view));
+            int iProjectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
+            glUniformMatrix4fv(iProjLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 
-            perennial::rendering::projLoc = projectionLoc;
-            perennial::rendering::modelLoc = modelLoc;
-            perennial::rendering::viewLoc = viewLoc;
+            perennial::rendering::iProjLoc = iProjectionLoc;
+            perennial::rendering::iModelLoc = iModelLoc;
+            perennial::rendering::iViewLoc = iViewLoc;
 
             return 0;
 
         }
 
-        void Frame()
+        void frame()
         {
             glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen every frame
             glGetError();
             
             // draw our first triangle
-            perennial::rendering::shaderProgram.Use();
+            perennial::rendering::shaderProgram.use();
             glBindVertexArray(perennial::rendering::VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glCheckError();
             //std::cout << perennial::rendering::VAO << std::endl;
@@ -269,7 +269,7 @@ namespace perennial{
             int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::view));
             int projectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
-            glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::proj));
+            glUniformMatrix4fv(iProjLoc, 1, GL_FALSE, glm::value_ptr(perennial::rendering::proj));
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
             glCheckError();
@@ -281,12 +281,12 @@ namespace perennial{
             glGetError();
         }
 
-        void Cleanup()
+        void cleanup()
         {
             glfwTerminate(); 
         }
 
-        void SetMode(GLenum face, GLenum mode)
+        void setMode(GLenum face, GLenum mode)
         {
             glPolygonMode(face, mode);
         }

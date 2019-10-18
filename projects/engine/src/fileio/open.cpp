@@ -5,7 +5,7 @@
 
 namespace perennial{
     namespace fileio{
-        std::string OpenFile(std::string FileName) //Copied from stackoverflow, apparently 200% faster when loading moby dick... or something.
+        std::string s_openFile(std::string FileName) //Copied from stackoverflow, apparently 200% faster when loading moby dick... or something.
         {
             std::ifstream ifs(FileName.c_str(), std::ios::in | std::ios::binary | std::ios::ate);
 

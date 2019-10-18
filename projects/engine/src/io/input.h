@@ -2,8 +2,8 @@
 #define INPUT_H
 namespace perennial{
     namespace input{
-        void ProcessInput();
-        bool CheckClose();
+        void processInput();
+        bool b_checkClose();
     }
 }
 #endif

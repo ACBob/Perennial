@@ -13,8 +13,8 @@ namespace perennial{
                 Shader(const std::string FilePath, GLuint Type);
                 ~Shader();
 
-                GLuint GetId();
-                void Delete();
+                GLuint getId();
+                void deleteThis();
         };
 
         class ShaderProgram
@@ -25,9 +25,9 @@ namespace perennial{
                 ShaderProgram(const GLuint Vertex, const GLuint Fragment);
                 ~ShaderProgram();
 
-                GLuint GetId();
-                void Use();
-                void Delete();
+                GLuint getId();
+                void use();
+                void deleteThis();
         };
     }
 }

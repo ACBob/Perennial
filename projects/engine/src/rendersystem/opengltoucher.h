@@ -6,12 +6,12 @@ namespace perennial{
     namespace rendering{
         extern GLFWwindow* GameWindow;
         
-        int Init();
-        int GetKey(GLFWwindow* GameWindow,int Key);
-        void SetWindowShouldClose(GLFWwindow* GameWindow,bool shouldClose);
-        void Frame();
-        void Cleanup();
-        void SetMode(GLenum face, GLenum mode);
+        int i_init();
+        int getKey(GLFWwindow* GameWindow,int Key);
+        void setWindowShouldClose(GLFWwindow* GameWindow,bool shouldClose);
+        void frame();
+        void cleanup();
+        void setMode(GLenum face, GLenum mode);
 
         extern float triVerts[];
         extern unsigned int VBO;

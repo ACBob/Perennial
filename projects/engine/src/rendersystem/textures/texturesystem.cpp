@@ -8,13 +8,7 @@
 namespace perennial{
     namespace rendering{
         namespace textures{
-            /*int LoadImage(char* FilePath){
-                int width, height, nrChannels;
-                unsigned char *data = stbi_load(FilePath, &width, &height, &nrChannels, 0); 
-                stbi_image_free(data);
-                return width, height, nrChannels;
-            }*/
-            GLuint MakeTexture(std::string FilePath){
+            GLuint makeTexture(std::string FilePath){
                 std::cout << "Loading Image " << FilePath << std::endl;
                 int width, height, nrChannels;
                 unsigned char *data = stbi_load(FilePath.c_str(), &width, &height, &nrChannels, 0); 

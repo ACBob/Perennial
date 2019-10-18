@@ -6,7 +6,7 @@
 #include "shaderprogram.h"
 namespace perennial{
     namespace shaders{
-        GLuint CreateShaderProgram(GLuint VertexShader, GLuint FragmentShader){
+        GLuint createShaderProgram(GLuint VertexShader, GLuint FragmentShader){
             
             int  success;
             char infoLog[512];

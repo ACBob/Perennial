@@ -6,26 +6,26 @@
 
 namespace perennial{
 
-    bool GameRunning = false;
+    bool bGameRunning = false;
 
-    int GameLoop()
+    int i_gameLoop()
     {
-        if(perennial::rendering::Init())
+        if(perennial::rendering::i_init())
         {
 
             return -1;
 
         }
         
-        GameRunning = true;
+        bGameRunning = true;
 
-        while(GameRunning)
+        while(bGameRunning)
         {
-            perennial::rendering::Frame();
-            perennial::input::ProcessInput();
-            if(perennial::input::CheckClose()) //Check if we're supposed to close.
+            perennial::rendering::frame();
+            perennial::input::processInput();
+            if(perennial::input::b_checkClose()) //Check if we're supposed to close.
             {
-                GameRunning = false;
+                bGameRunning = false;
             }
 
         }

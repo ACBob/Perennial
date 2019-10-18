@@ -8,9 +8,9 @@
 #include <string>
 namespace perennial{
     namespace shaders{
-        GLuint LoadShader(std::string ShaderFileName, int ShaderType){
+        GLuint loadShader(std::string ShaderFileName, int ShaderType){
             std::cout << "PERENNIAL::SHADERS::LOADSHADER::LOAD_PATH : " << ShaderFileName << std::endl;
-            std::string ShaderFileLines = perennial::fileio::OpenFile(ShaderFileName);
+            std::string ShaderFileLines = perennial::fileio::s_openFile(ShaderFileName);
 
             const char* ShaderSource = ShaderFileLines.c_str();
 
@@ -46,17 +46,17 @@ namespace perennial{
             this->ID = 0;
         }
         Shader::Shader(const std::string FilePath,GLuint Type){
-            this->ID = perennial::shaders::LoadShader(FilePath,Type);
+            this->ID = perennial::shaders::loadShader(FilePath,Type);
         }
         Shader::~Shader(){
             std::cout << "Shader Destructor Called" << std::endl;
-            this->Delete();
+            this->deleteThis();
         }
-        GLuint Shader::GetId()
+        GLuint Shader::getId()
         {
             return this->ID;
         }
-        void Shader::Delete()
+        void Shader::deleteThis()
         {
             glDeleteShader(this->ID);
         }
@@ -67,21 +67,21 @@ namespace perennial{
             this->ID = 0;
         }
         ShaderProgram::ShaderProgram(const GLuint Vertex, const GLuint Fragment){
-            this->ID = perennial::shaders::CreateShaderProgram(Vertex,Fragment);
+            this->ID = perennial::shaders::createShaderProgram(Vertex,Fragment);
         }
         ShaderProgram::~ShaderProgram(){
             std::cout << "ShaderProgram Destructor called" << std::endl;
-            Delete();
+            this->deleteThis();
         }
-        GLuint ShaderProgram::GetId()
+        GLuint ShaderProgram::getId()
         {
             return this->ID;
         }
-        void ShaderProgram::Use()
+        void ShaderProgram::use()
         {
             glUseProgram(ID);
         }
-        void ShaderProgram::Delete()
+        void ShaderProgram::deleteThis()
         {
             glDeleteProgram(this->ID);
         }

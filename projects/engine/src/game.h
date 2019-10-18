@@ -2,8 +2,8 @@
 #define GAME_H
 extern "C"{
 namespace perennial{
-    int GameLoop();
-    extern bool GameRunning;
+    int i_gameLoop();
+    extern bool bGameRunning;
 }
 }
 #endif

@@ -3,32 +3,32 @@
 #include "rendersystem/opengltoucher.h"
 namespace perennial{
     namespace input{
-        bool WireFrame;
-        bool HitTab;
-        void ProcessInput()
+        bool bWireFrame;
+        bool bHitTab;
+        void processInput()
         {
 
-            if(perennial::rendering::GetKey(perennial::rendering::GameWindow,GLFW_KEY_ESCAPE) == GLFW_PRESS)
+            if(perennial::rendering::getKey(perennial::rendering::GameWindow,GLFW_KEY_ESCAPE) == GLFW_PRESS)
             {
-                perennial::rendering::SetWindowShouldClose(perennial::rendering::GameWindow,true);
+                perennial::rendering::setWindowShouldClose(perennial::rendering::GameWindow,true);
             }
-            else if(perennial::rendering::GetKey(perennial::rendering::GameWindow,GLFW_KEY_TAB) == GLFW_PRESS && !HitTab)
+            else if(perennial::rendering::getKey(perennial::rendering::GameWindow,GLFW_KEY_TAB) == GLFW_PRESS && !bHitTab)
             {
-                perennial::rendering::SetMode(GL_FRONT_AND_BACK,(WireFrame) ? GL_LINE : GL_FILL);
-                HitTab = true;
-                WireFrame = !WireFrame;
+                perennial::rendering::setMode(GL_FRONT_AND_BACK,(bWireFrame) ? GL_LINE : GL_FILL);
+                bHitTab = true;
+                bWireFrame = !bWireFrame;
             }
-            else if(perennial::rendering::GetKey(perennial::rendering::GameWindow,GLFW_KEY_TAB) == GLFW_RELEASE)
+            else if(perennial::rendering::getKey(perennial::rendering::GameWindow,GLFW_KEY_TAB) == GLFW_RELEASE)
             {
-                HitTab = false;
+                bHitTab = false;
             }
 
         }
-        bool CheckClose()
+        bool b_checkClose()
         {
             if(glfwWindowShouldClose(perennial::rendering::GameWindow))
             {
-                perennial::rendering::Cleanup();
+                perennial::rendering::cleanup();
                 return true;
             }
             return false;
