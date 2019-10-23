@@ -53,10 +53,9 @@ def Proccess(path,shouldOverride):
         Proccess(os.path.abspath(path+'/'+thing),shouldOverride)
 
 def ProccessFile(path,shouldOverride):
-    try: File = open(path,'r+')
+    try: File = open(path,'r')
     except FileNotFoundError: return #print("what?",path,"Doesn't exist, somehow.") ; return #No file, return.
     if not shouldOverride: OutFile = open(path+'-tabbed','w+')
-    else: OutFile = File
 
     _, ext = os.path.splitext(path)
     if ext in ignoreList:
@@ -73,8 +72,10 @@ def ProccessFile(path,shouldOverride):
         print("\u001b[42;1m",FileLine.replace('    ','<T>').strip(),'\u001b[0m')
         EndFileLines.append(FileLine.replace('    ','\t'))
         
-
+    File.close()
+    if shouldOverride: OutFile = open(path,'w+')
     OutFile.writelines(EndFileLines)
+    OutFile.close()
         
 if __name__ == "__main__":
     if not dBug: main(sys.argv[1:]) #Send the main function everything BUT the first argument, as that's always the name of the script.
