@@ -3,7 +3,7 @@ import getopt #Not sure.
 import os #definitely sure.
 
 #Feel free to upscale.
-ignoreList = ['.c','.hpp','.jpg','.png','.swp','.inl']
+ignoreList = ['.c','.hpp','.jpg','.png','.swp','.inl','.so','.app','.a']
 
 dBug = False
 
@@ -40,6 +40,9 @@ def main(argv):
 
 def Proccess(path,shouldOverride):
     print('\u001b[35m',path,'\u001b[0m')
+    if 'include' in path:
+        print("\u001b[33m","include in path, ignoring!",'\u001b[0m')
+        return
     if not os.path.isdir(path):
         #print("working on a file, skipping to processing.")
         ProccessFile(path,shouldOverride)
