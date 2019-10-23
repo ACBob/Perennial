@@ -31,5 +31,7 @@
 *.out
 *.app
 
+#VIm temp files
+*.swp
 
 makefile
