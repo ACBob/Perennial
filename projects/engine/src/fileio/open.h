@@ -3,8 +3,8 @@
 #include <string>
 extern "C"{
 namespace perennial{
-    namespace fileio{
-        std::string s_openFile(std::string FileName);
-    }
+	namespace fileio{
+		std::string s_openFile(std::string FileName);
+	}
 }}
 #endif

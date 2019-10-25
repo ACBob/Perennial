@@ -5,31 +5,31 @@
 extern "C"{
 
 namespace perennial{
-    namespace shaders{
-        class Shader
-        {
-            public:
-                GLuint ID;
-                Shader();
-                Shader(const std::string FilePath, GLuint Type);
-                ~Shader();
+	namespace shaders{
+		class Shader
+		{
+			public:
+				GLuint ID;
+				Shader();
+				Shader(const std::string FilePath, GLuint Type);
+				~Shader();
 
-                GLuint getId();
-                void deleteThis();
-        };
+				GLuint getId();
+				void deleteThis();
+		};
 
-        class ShaderProgram
-        {
-            public:
-                GLuint ID;
-                ShaderProgram();
-                ShaderProgram(const GLuint Vertex, const GLuint Fragment);
-                ~ShaderProgram();
+		class ShaderProgram
+		{
+			public:
+				GLuint ID;
+				ShaderProgram();
+				ShaderProgram(const GLuint Vertex, const GLuint Fragment);
+				~ShaderProgram();
 
-                GLuint getId();
-                void use();
-                void deleteThis();
-        };
-    }
+				GLuint getId();
+				void use();
+				void deleteThis();
+		};
+	}
 }}
 #endif

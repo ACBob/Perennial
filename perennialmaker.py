@@ -64,7 +64,7 @@ def main():
     clearscreen()
     print("PerennialMake-r Starting....")
     
-    projects = os.listdir('./game/')
+    projects = os.listdir('./projects/')
     if not projects:
         print("Projects weren't detected!")
         return -1
@@ -80,35 +80,10 @@ def main():
 
     source = os.listdir('./game/%s/src'%(project))
     print("Getting .cpp Files...")
-    final = SearchThrough(os.path.abspath('./game/%s/src'%(project)))
+    final = SearchThrough(os.path.abspath('./projects/%s/src'%(project)))
     clearscreen()
     windows = (os.name == 'nt')
     command = ''
-    if windows:
-        clearscreen()
-        print("Detected Windows System, Please specify your Terminal command you use to compile!")
-        print("WARNING: May not work, this is setup for G++!")
-        print("I'm not even sure that windows supports make..")
-        command = input('> ')
-    else:
-        clearscreen()
-        print("Detected Linux/Mac, assuming G++ as compiler.")
-        command = 'g++'
-    print("Done!")
-    print("Generating makefile...")
-    makefile = open('./game/%s/makefile'%(project),'w+')
+    
 
-    lines = ['','','','','','']
-    lines[0] = "COMPILER="+command
-    lines[1] = "\nPROJECT="+project
-    lines[2] = "\nSRCDIR="+os.path.abspath('./game/%s/src'%(project))
-    lines[3] = "\nRESULT=main.app\n"
-
-    lines[4] = "all: ; "
-    lines[5] = "$(COMPILER) -g -std=c++11 "+' '.join(final)+" -o $(RESULT) -I $(SRCDIR)/include -I $(SRCDIR) -lGL -lglfw -lX11 -lpthread -ldl"
-
-    makefile.writelines(lines)
-    makefile.close()
-    print("Done!")
-
-#main()
+main()

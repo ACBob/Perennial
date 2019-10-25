@@ -4,10 +4,10 @@
 #include <string>
 extern "C"{
 namespace perennial{
-    namespace rendering{
-        namespace textures{
-            GLuint makeTexture(std::string FilePath);
-        }
-    }
+	namespace rendering{
+		namespace textures{
+			GLuint makeTexture(std::string FilePath);
+		}
+	}
 }}
 #endif

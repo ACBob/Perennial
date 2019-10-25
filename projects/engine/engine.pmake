@@ -1,0 +1,22 @@
+{
+	"PROCDEFS":
+	[
+
+	],
+	"FILEENDINGS":
+	[
+		".cpp",
+		".c"
+	],
+	"FLAGS":
+	[
+		"-g",
+		"-std=c++11",
+		"-lGL",
+		"-lglfw",
+		"-lX11",
+		"-lpthread",
+		"-ldl",
+		"		
+	]
+}

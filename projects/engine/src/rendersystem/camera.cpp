@@ -3,8 +3,8 @@
 
 Camera::Camera()
 {
-	this->viewDirection = (0.0f,0.0f,-1.0f);
-	this->UP = (0.0f, 1.0f, 0.0f);
+	this->viewDirection = glm::vec3(0.0f,0.0f,-1.0f);
+	this->UP = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
 void Camera::mouseUpdate(const glm::vec2& newMousePosition)
