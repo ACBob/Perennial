@@ -5,6 +5,7 @@ extern "C"{
 namespace perennial{
 	namespace shaders{
 		GLuint createShaderProgram(GLuint VertexShader, GLuint FragmentShader);
+        void init_shader_system();
 	}
 }}
 #endif

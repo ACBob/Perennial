@@ -15,7 +15,7 @@ namespace perennial{
 		void cleanup();
 		void setMode(GLenum face, GLenum mode);
 
-		Camera* active_camera;
+		extern Camera* active_camera;
 
 		extern float triVerts[];
 		extern unsigned int VBO;

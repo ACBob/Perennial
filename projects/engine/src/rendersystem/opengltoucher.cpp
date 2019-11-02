@@ -34,7 +34,7 @@ namespace perennial{
 		unsigned int VAO;
 		unsigned int EBO;
 
-		extern Camera* active_camera;
+		Camera* active_camera;
 
 		unsigned int texture;
 
@@ -154,15 +154,8 @@ namespace perennial{
 
 			//TEXTURE STUFF!
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //We're a pixelart. We don't do stretches here.
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+            perennial::rendering::textures::init_texture_system();
+			
 			printf("perennial::render::compile_vertex\n");
 			perennial::shaders::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
 			printf("perennial::render::compile_fragment\n");
@@ -211,15 +204,7 @@ namespace perennial{
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(perennial::rendering::indices), perennial::rendering::indices, GL_STATIC_DRAW);
 
 
-			//Positions
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-			glEnableVertexAttribArray(0);
-			//Colours
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3* sizeof(float)));
-			glEnableVertexAttribArray(1);
-			//TexCoords
-			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-			glEnableVertexAttribArray(2);  
+			perennial::shaders::init_shader_system();
 
 			// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 			glBindBuffer(GL_ARRAY_BUFFER, 0); 

@@ -7,6 +7,7 @@ namespace perennial{
 	namespace rendering{
 		namespace textures{
 			GLuint makeTexture(std::string FilePath);
+            void init_texture_system();
 		}
 	}
 }}
