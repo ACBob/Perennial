@@ -83,6 +83,7 @@ namespace perennial{
 		}
 		void ShaderProgram::deleteThis()
 		{
+            std::cout << "ShaderProgram deleteThis Called" << std::endl;
 			glDeleteProgram(this->ID);
 		}
 	}

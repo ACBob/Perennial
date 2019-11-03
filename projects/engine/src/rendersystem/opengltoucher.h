@@ -14,12 +14,14 @@ namespace perennial{
 		void frame();
 		void cleanup();
 		void setMode(GLenum face, GLenum mode);
+        void make_shaders();
+        void remake_shaders();
 
 		extern Camera* active_camera;
 
 		extern float triVerts[];
 		extern unsigned int VBO;
-		extern perennial::shaders::ShaderProgram shaderProgram;
+		extern perennial::shaders::ShaderProgram *shaderProgram;
 		extern unsigned int VAO;
 	}
 }}

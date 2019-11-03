@@ -1,7 +1,7 @@
 #include "input.h"
 #include "GLFW/glfw3.h"
 #include "rendersystem/opengltoucher.h"
-#include <cstdio>
+#include <iostream>
 namespace perennial{
 	namespace input{
 		bool bWireFrame;
@@ -14,8 +14,11 @@ namespace perennial{
                 bWireFrame = !bWireFrame;
             }
             
-            if (iKey == GLFW_KEY_R && iAction == GLFW_PRESS && iAction == GLFW_MOD_CONTROL)
-                printf("Ctrl+R");
+            if (iKey == GLFW_KEY_R && iAction == GLFW_PRESS)
+            {
+                std::cout << "Reload Shaders" << std::endl;
+                perennial::rendering::remake_shaders();
+            }
 		}
 		bool b_checkClose()
 		{
