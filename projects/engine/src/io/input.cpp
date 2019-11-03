@@ -35,7 +35,7 @@ namespace perennial{
 		}
 		void mouseEvent(GLFWwindow* Window, double dXPos, double dYPos)
 		{
-			perennial::rendering::active_camera->mouseUpdate(glm::vec2(dXPos,dYPos));
+			//perennial::rendering::active_camera->mouseUpdate(glm::vec2(dXPos,dYPos));
 		}
 	}
 }
