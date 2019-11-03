@@ -1,22 +1,29 @@
 #include "camera.h"
 #include <glm/gtx/transform.hpp>
 
-Camera::Camera()
+#define UP_VEC glm::vec3(0.0f, 0.0f, 1.0f)
+
+Camera::Camera(glm::vec3 position, glm::vec3 target)
 {
-	this->viewDirection = glm::vec3(0.0f,0.0f,-1.0f);
-	this->UP = glm::vec3(0.0f, 1.0f, 0.0f);
+	this->position = position;
+    this->target = target;
+    this->direction = glm::normalize(position - target);
+    this->right = glm::normalize(glm::cross(UP_VEC, this->direction));
+    this->up = glm::cross(this->direction, this->right);
+    
+    this->view = glm::lookAt(this->position,
+                             this->target,
+                             UP_VEC);
+    
+    
+
 }
 
 void Camera::mouseUpdate(const glm::vec2& newMousePosition)
 {
 	glm::vec2 mouseDelta = newMousePosition-(this->oldMousePosition);
-	this->viewDirection = glm::mat3(glm::rotate(mouseDelta.x, this->UP)) * this->viewDirection;
-
-
-	this->oldMousePosition = newMousePosition;
+	this->view = glm::lookAt(this->position,
+                             this->target,
+                             UP_VEC);
 }
 
-glm::mat4 Camera::getWorldToViewMatrix() const
-{
-	return glm::lookAt(this->position, this->position + this->viewDirection, this->UP);
-}
