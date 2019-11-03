@@ -1,28 +1,21 @@
 #include "input.h"
 #include "GLFW/glfw3.h"
 #include "rendersystem/opengltoucher.h"
+#include <cstdio>
 namespace perennial{
 	namespace input{
 		bool bWireFrame;
 		bool bHitTab;
-		void processInput()
+		void keyEvent(GLFWwindow* Window, int iKey, int iScancode, int iAction, int iMods)
 		{
-
-			if(perennial::rendering::getKey(perennial::rendering::GameWindow,GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			{
-				perennial::rendering::setWindowShouldClose(perennial::rendering::GameWindow,true);
-			}
-			else if(perennial::rendering::getKey(perennial::rendering::GameWindow,GLFW_KEY_TAB) == GLFW_PRESS && !bHitTab)
-			{
-				perennial::rendering::setMode(GL_FRONT_AND_BACK,(bWireFrame) ? GL_LINE : GL_FILL);
-				bHitTab = true;
-				bWireFrame = !bWireFrame;
-			}
-			else if(perennial::rendering::getKey(perennial::rendering::GameWindow,GLFW_KEY_TAB) == GLFW_RELEASE)
-			{
-				bHitTab = false;
-			}
-
+            if (iKey == GLFW_KEY_TAB && iAction == GLFW_PRESS)
+            {
+                perennial::rendering::setMode(GL_FRONT_AND_BACK,(bWireFrame) ? GL_LINE : GL_FILL);
+                bWireFrame = !bWireFrame;
+            }
+            
+            if (iKey == GLFW_KEY_R && iAction == GLFW_PRESS && iAction == GLFW_MOD_CONTROL)
+                printf("Ctrl+R");
 		}
 		bool b_checkClose()
 		{

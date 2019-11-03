@@ -22,7 +22,6 @@ namespace perennial{
 		while(bGameRunning)
 		{
 			perennial::rendering::frame();
-			perennial::input::processInput();
 			if(perennial::input::b_checkClose()) //Check if we're supposed to close.
 			{
 				bGameRunning = false;

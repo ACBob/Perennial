@@ -151,6 +151,7 @@ namespace perennial{
 
 			//Set-up Callbacks for GLFW window.
 			glfwSetCursorPosCallback(perennial::rendering::GameWindow, perennial::input::mouseEvent);
+            glfwSetKeyCallback(perennial::rendering::GameWindow, perennial::input::keyEvent);
 
 			//TEXTURE STUFF!
 
