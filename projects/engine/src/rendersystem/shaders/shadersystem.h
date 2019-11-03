@@ -11,25 +11,14 @@ namespace perennial{
 			public:
 				GLuint ID;
 				Shader();
-				Shader(const std::string FilePath, GLuint Type);
+				Shader(const std::string Vsrc, const std::string Fsrc);
 				~Shader();
 
 				GLuint getId();
+                void use();
 				void deleteThis();
 		};
 
-		class ShaderProgram
-		{
-			public:
-				GLuint ID;
-				ShaderProgram();
-				ShaderProgram(const GLuint Vertex, const GLuint Fragment);
-				~ShaderProgram();
-
-				GLuint getId();
-				void use();
-				void deleteThis();
-		};
 	}
 }}
 #endif

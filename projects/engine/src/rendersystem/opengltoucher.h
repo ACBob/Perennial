@@ -21,7 +21,7 @@ namespace perennial{
 
 		extern float triVerts[];
 		extern unsigned int VBO;
-		extern perennial::shaders::ShaderProgram *shaderProgram;
+		extern perennial::shaders::Shader *shaderProgram;
 		extern unsigned int VAO;
 	}
 }}

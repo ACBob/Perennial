@@ -30,7 +30,7 @@ namespace perennial{
 		GLFWwindow* GameWindow;
 
 		unsigned int VBO;
-		perennial::shaders::ShaderProgram *shaderProgram;
+		perennial::shaders::Shader *shaderProgram;
 		unsigned int VAO;
 		unsigned int EBO;
 
@@ -107,30 +107,16 @@ namespace perennial{
 
         void make_shaders()
         {
-            printf("perennial::render::compile_vertex\n");
-			perennial::shaders::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
-			printf("perennial::render::compile_fragment\n");
-			perennial::shaders::Shader fragmentShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
-			
-			printf("perennial::render::make_program\n");
-			static perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);
-			perennial::rendering::shaderProgram = &shaderProgram;		
-			vertexShader.deleteThis();
-			fragmentShader.deleteThis(); 
-			glCheckError(); 
+            printf("Make Shader");
+            perennial::shaders::Shader shader = perennial::shaders::Shader("shaders/vertex.glsl","shaders/fragment.glsl");
+            perennial::rendering::shaderProgram = &shader;
         }
 
         void remake_shaders()
         {
-            printf("perennial::render::compile_vertex\n");
-			perennial::shaders::Shader vertexShader("shaders/vertex.glsl",GL_VERTEX_SHADER);
-			printf("perennial::render::compile_fragment\n");
-			perennial::shaders::Shader fragmentShader("shaders/fragment.glsl",GL_FRAGMENT_SHADER);
-			
-			printf("perennial::render::make_program\n");
-			static perennial::shaders::ShaderProgram shaderProgram(vertexShader.ID,fragmentShader.ID);
-			perennial::rendering::shaderProgram = &shaderProgram;
-			glCheckError(); 
+            printf("Remake Shader");
+            perennial::shaders::Shader shader = perennial::shaders::Shader("shaders/vertex.glsl","shaders/fragment.glsl");
+            perennial::rendering::shaderProgram = &shader;
         }
 
 		int i_init(){

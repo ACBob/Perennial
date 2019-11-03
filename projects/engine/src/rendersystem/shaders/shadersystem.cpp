@@ -40,13 +40,36 @@ namespace perennial{
 
 		}
 
-		Shader::Shader()
-		{
-			std::cout << "Default Constructor for Shader, assuming NULL.";
-			this->ID = 0;
-		}
-		Shader::Shader(const std::string FilePath,GLuint Type){
-			this->ID = perennial::shaders::loadShader(FilePath,Type);
+		Shader::Shader(const std::string Vsrc, const std::string Fsrc){
+            int  success;
+			char infoLog[512];
+
+            printf("Compile Vertex\n");
+			int vertexId = perennial::shaders::loadShader(Vsrc, GL_VERTEX_SHADER);
+            printf("Compile Fragment\n");
+            int fragmentId = perennial::shaders::loadShader(Fsrc, GL_FRAGMENT_SHADER);
+			
+			GLuint ShaderProgramId = glCreateProgram();
+
+			std::cout << vertexId << "  " << fragmentId << std::endl;
+
+			glAttachShader(ShaderProgramId, vertexId);
+			perennial::rendering::glCheckError();
+			glAttachShader(ShaderProgramId, fragmentId);
+			perennial::rendering::glCheckError();
+
+			glLinkProgram(ShaderProgramId);
+
+
+			glGetProgramiv(ShaderProgramId, GL_LINK_STATUS, &success);
+			if(!success) {
+				glGetProgramInfoLog(ShaderProgramId, 512, NULL, infoLog);
+				std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED" << std::endl;
+				std::cout << infoLog << std::endl;
+			}
+            this->ID = ShaderProgramId;
+            glDeleteShader(vertexId);
+            glDeleteShader(fragmentId);
 		}
 		Shader::~Shader(){
 			std::cout << "Shader Destructor Called" << std::endl;
@@ -56,34 +79,12 @@ namespace perennial{
 		{
 			return this->ID;
 		}
+        void Shader::use()
+        {
+            glUseProgram(this->ID);
+        }
 		void Shader::deleteThis()
 		{
-			glDeleteShader(this->ID);
-		}
-
-		ShaderProgram::ShaderProgram()
-		{
-			std::cout << "Default constructor called for ShaderProgram, assuming NULL.";
-			this->ID = 0;
-		}
-		ShaderProgram::ShaderProgram(const GLuint Vertex, const GLuint Fragment){
-			this->ID = perennial::shaders::createShaderProgram(Vertex,Fragment);
-		}
-		ShaderProgram::~ShaderProgram(){
-			std::cout << "ShaderProgram Destructor called" << std::endl;
-			this->deleteThis();
-		}
-		GLuint ShaderProgram::getId()
-		{
-			return this->ID;
-		}
-		void ShaderProgram::use()
-		{
-			glUseProgram(ID);
-		}
-		void ShaderProgram::deleteThis()
-		{
-            std::cout << "ShaderProgram deleteThis Called" << std::endl;
 			glDeleteProgram(this->ID);
 		}
 	}
