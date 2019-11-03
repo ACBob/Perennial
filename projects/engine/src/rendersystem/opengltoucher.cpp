@@ -146,7 +146,7 @@ namespace perennial{
 
 			//Create our camera
 
-			Camera tempCam = Camera(glm::vec3(0,0,0),glm::vec3(0,0,0));
+			Camera tempCam = Camera(glm::vec3(0.0f,0.0f,3.0f),glm::vec3(0.0f,0.0f,0.0f));
 			perennial::rendering::active_camera = &tempCam;
 
 			//Set-up Callbacks for GLFW window.

@@ -1,7 +1,7 @@
 #include "camera.h"
 #include <glm/gtx/transform.hpp>
 
-#define UP_VEC glm::vec3(0.0f, 0.0f, 1.0f)
+#define UP_VEC glm::vec3(0.0f, 1.0f, 0.0f)
 
 Camera::Camera(glm::vec3 position, glm::vec3 target)
 {
@@ -21,9 +21,9 @@ Camera::Camera(glm::vec3 position, glm::vec3 target)
 
 void Camera::mouseUpdate(const glm::vec2& newMousePosition)
 {
-	glm::vec2 mouseDelta = newMousePosition-(this->oldMousePosition);
+	//glm::vec2 mouseDelta = newMousePosition-(this->oldMousePosition);
 	this->view = glm::lookAt(this->position,
-                             this->target,
+                             this->position + this->direction,
                              UP_VEC);
 }
 
