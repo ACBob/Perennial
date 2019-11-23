@@ -24,12 +24,19 @@ J A Z C F N
 #include <GLFW/glfw3.h>
 
 #include "rendersystem.h"
+#include "shader.h"
 
 GLFWwindow* GameWindow;
 
-float[3] Triangle = { 0.0f, 0.0f, 
-                      1.0f, 0.0f,
-                      0.0f, 1.0f};
+#ifdef TEST_TRIANGLE
+    
+    float Triangle[] = { 0.0f, 0.0f, 0.0f,
+                        1.0f, 0.0f, 0.0f,
+                        0.0f, 1.0f, 0.0f,};
+    unsigned int TriangleVBO;
+    //unsigned int Triangle
+
+#endif
 
 int InitRenderSystem()
 {
@@ -65,6 +72,15 @@ int InitRenderSystem()
     
     glViewport(0, 0, 800, 600);
     //glfwSetFramebufferSizeCallback(GameWindow, ResizeEvent);  
+
+
+    glClearColor(0.36f,0.1f,0.25f,1.0f);
+
+    #ifdef TEST_TRIANGLE
+        glGenBuffers(1, &VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle), Triangle, GL_STATIC_DRAW);
+    #endif
 
     return 0;
 }
