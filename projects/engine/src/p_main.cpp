@@ -2,7 +2,10 @@
 //--- Purpose: Define entry points
 
 //Includes
-#include <cstdio.h>
+#include <stdio.h>
+//#include <thread>
+#include "rendersystem.h"
+#include "p_main.h"
 
 // p_main
 //- Returns INT
@@ -11,6 +14,13 @@ int PerennialMain()
 {
 
 	//Should we hard-code version number?
-	sprintf("Perennial (V0.0)");
+	printf("Perennial (V0.0)\n");
+    InitRenderSystem(); //Init sets stuff
+    //std::thread RenderThread(RenderSystem); //Run the render loop
+    
+    //RenderThread.join();
 
+    RenderSystem();
+
+    return 0;
 }

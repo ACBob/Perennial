@@ -4,16 +4,16 @@
 
 int main()
 {
-    void* handle = dlopen("./bin/engine.so", RTLD_LAZY);
-    typedef int(*engine_game_loop)();
+    void* handle = dlopen("bin/engine.so", RTLD_LAZY);
+    typedef int(*engineloop)();
 
-    engine_game_loop GameLoop = (engine_game_loop)dlsym(handle, "i_gameLoop");
+    engineloop GameLoop = (engineloop)dlsym(handle, "PerennialMain");
 
     if(GameLoop)
         GameLoop();
     else
     {
-        printf("Can't find GameLoop symbol.\n");
+        printf("Can't find PerennialMain symbol.\n");
         return -1;
     }
     

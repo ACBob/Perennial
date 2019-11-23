@@ -1,7 +1,0 @@
-//PerennialMake-r -- Engine
-
--f *.cpp
--f *.c
-
-$ -I ./src -I ./src/include 
-$ -lGL -lGL -lglfw -lX11 -lpthread -ldl
