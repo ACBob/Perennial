@@ -1,16 +1,21 @@
 #include "fileoperations.h"
 #include "shader.h"
 #include "stdio.h"
+#include <iostream>
 #include <string>
 
 
-Shader::Shader(std::string VertexPath, std::string FragmentPath)
+Shader::Shader(const char *VertexPath, const char *FragmentPath)
 {
     int Success;
     char Log[512];
 
-    const char* VertexSource = OpenFile(VertexPath).c_str();
-    const char* FragmentSource = OpenFile(FragmentPath).c_str();
+    const char* VertexSource = OpenFile(VertexPath);
+    const char* FragmentSource = OpenFile(FragmentPath);
+
+    printf(VertexSource);
+    std::cout << std::endl;
+    std::cout << VertexSource << std::endl;
 
     this->VertexID = glCreateShader(GL_VERTEX_SHADER);
     this->FragmentID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -22,7 +27,12 @@ Shader::Shader(std::string VertexPath, std::string FragmentPath)
     if (!Success)
     {
         glGetShaderInfoLog(this->VertexID, 512, NULL, Log);
-        //printf("Shader Compilation Failed\n"+Log+"\n");
+        printf("Shader Compilation Failed\n");
+        printf(Log);
+        printf("\n");
+        printf("File source:\n");
+        printf(VertexSource);
+        printf("\n");
     }
 
     glShaderSource(this->FragmentID, 1, &FragmentSource, NULL);
@@ -32,7 +42,12 @@ Shader::Shader(std::string VertexPath, std::string FragmentPath)
     if (!Success)
     {
         glGetShaderInfoLog(this->VertexID, 512, NULL, Log);
-        //printf("Shader Compilation Failed\n"+Log+"\n");
+        printf("Shader Compilation Failed\n");
+        printf(Log);
+        printf("\n");
+        printf("File source:\n");
+        printf(FragmentSource);
+        printf("\n");
     }
 
     this->ProgramID = glCreateProgram();
@@ -45,9 +60,23 @@ Shader::Shader(std::string VertexPath, std::string FragmentPath)
 
     if(!Success) {
         glGetProgramInfoLog(this->ProgramID, 512, NULL, Log);
-        //printf("Program Linking Failed\n"+Log+"\n");
+        printf("Shader Linking Failed\n");
+        printf(Log);
+        printf("\n");
+
     }
 
+}
+
+Shader::~Shader()
+{}
+
+Shader::Shader()
+{}
+
+void Shader::Use()
+{
+    glUseProgram(this->ProgramID);
 }
 
 unsigned int Shader::GetProgId()

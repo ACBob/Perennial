@@ -12,9 +12,11 @@ class Shader
         unsigned int FragmentID;
         unsigned int ProgramID;
     public:
-        Shader(std::string VertexPath, std::string FragmentPath);
+        Shader();
+        Shader(const char *VertexPath, const char *FragmentPath);
         ~Shader();
 
+        void Use();
         unsigned int GetProgId();
 };
 
